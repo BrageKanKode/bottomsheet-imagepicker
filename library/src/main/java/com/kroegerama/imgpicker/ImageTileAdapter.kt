@@ -148,7 +148,7 @@ sealed class VHImageTileBase(
     class VHCameraTile(view: View, clickListener: () -> Unit) : VHImageTileBase(view) {
         init {
             view.setOnClickListener { clickListener.invoke() }
-            view.findViewById<ImageView>(R.id.ivIcon).setImageResource(R.drawable.ic_camera_tile)
+            view.findViewById<ImageView>(R.id.ivIcon).setImageResource(R.drawable.ic_camera_icon)
         }
     }
 }
