@@ -162,7 +162,7 @@ class BottomSheetImagePicker internal constructor() :
             setOnShowListener {
                 val bottomSheet = findViewById<View>(R.id.design_bottom_sheet)
                 bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-                bottomSheetBehavior.peekHeight = resources.getDimensionPixelSize(peekHeight)
+                bottomSheetBehavior.peekHeight = activity?.resources?.getDimensionPixelSize(peekHeight) ?: 400
                 bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
             }
         }
