@@ -219,6 +219,7 @@ class BottomSheetImagePicker internal constructor() :
         }
 
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra("android.intent.extra.quickCapture", true)
         if (intent.resolveActivity(requireContext().packageManager) == null) return
         val photoUri = try {
             getPhotoUri()
