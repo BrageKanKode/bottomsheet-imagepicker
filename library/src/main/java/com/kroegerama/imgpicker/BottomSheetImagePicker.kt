@@ -53,6 +53,8 @@ class BottomSheetImagePicker internal constructor() :
     private var showCameraButton = true
     private var showGalleryTile = false
     private var showGalleryButton = true
+    private var fileLocation = ""
+    private var saveFile = true
 
     @StringRes
     private var resTitleSingle = R.string.imagePickerSingle
@@ -260,7 +262,7 @@ class BottomSheetImagePicker internal constructor() :
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
 
                 //put images in DCIM folder
-                put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/")
+                put(MediaStore.MediaColumns.RELATIVE_PATH, fileLocation)
             }
             resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentVals)
         } else {
@@ -360,6 +362,7 @@ class BottomSheetImagePicker internal constructor() :
         resTitleMulti = args.getInt(KEY_TITLE_RES_MULTI, resTitleMulti)
         resTitleMultiMore = args.getInt(KEY_TITLE_RES_MULTI_MORE, resTitleMultiMore)
         resTitleMultiLimit = args.getInt(KEY_TITLE_RES_MULTI_LIMIT, resTitleMultiLimit)
+        fileLocation = args.getString(KEY_FILE_LOCATION, fileLocation)
 
         peekHeight = args.getInt(KEY_PEEK_HEIGHT, peekHeight)
 
@@ -430,6 +433,8 @@ class BottomSheetImagePicker internal constructor() :
         private const val KEY_TITLE_RES_MULTI = "titleResMulti"
         private const val KEY_TITLE_RES_MULTI_MORE = "titleResMultiMore"
         private const val KEY_TITLE_RES_MULTI_LIMIT = "titleResMultiLimit"
+        private const val KEY_FILE_LOCATION = "fileLocation"
+        private const val KEY_SAVE_FILE = "saveFile"
 
         private const val KEY_TEXT_EMPTY = "emptyText"
         private const val KEY_TEXT_LOADING = "loadingText"
@@ -479,6 +484,16 @@ class BottomSheetImagePicker internal constructor() :
 
         fun singleSelectTitle(@StringRes titleRes: Int) = args.run {
             putInt(KEY_TITLE_RES_SINGLE, titleRes)
+            this@Builder
+        }
+
+        fun fileLocation(fileLoc: String) = args.run {
+            putString(KEY_FILE_LOCATION, fileLoc)
+            this@Builder
+        }
+
+        fun saveFile(saveFile: Boolean) = args.run {
+            putBoolean(KEY_SAVE_FILE, saveFile)
             this@Builder
         }
 
