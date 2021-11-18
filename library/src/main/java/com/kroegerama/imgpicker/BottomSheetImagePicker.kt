@@ -488,7 +488,7 @@ class BottomSheetImagePicker internal constructor() :
         }
 
         fun canSaveFile(canSaveFile: Boolean) = args.run {
-            putInt(KEY_CAN_SAVE_FILE, canSaveFile)
+            putBoolean(KEY_CAN_SAVE_FILE, canSaveFile)
             this@Builder
         }
 
