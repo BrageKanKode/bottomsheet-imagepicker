@@ -27,6 +27,7 @@ class AcMain : BaseActivity(
             .singleSelectTitle(R.string.pick_single)
             .peekHeight(R.dimen.peekHeight)
             .requestTag("single")
+            .canSaveFile(true)
             .show(supportFragmentManager)
     }
 
@@ -40,6 +41,7 @@ class AcMain : BaseActivity(
                 R.string.pick_multi_limit
             )
             .requestTag("multi")
+            .canSaveFile(true)
             .show(supportFragmentManager)
     }
 
