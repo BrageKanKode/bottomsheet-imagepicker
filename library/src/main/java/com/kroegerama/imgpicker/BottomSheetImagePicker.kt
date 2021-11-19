@@ -54,7 +54,7 @@ class BottomSheetImagePicker internal constructor() :
     private var showGalleryTile = false
     private var showGalleryButton = true
     private var fileLocation = ""
-    private var saveFile = true
+    private var canSaveFile = true
 
     @StringRes
     private var resTitleSingle = R.string.imagePickerSingle
@@ -313,21 +313,23 @@ class BottomSheetImagePicker internal constructor() :
             super.onActivityResult(requestCode, resultCode, data)
             return
         }
-        when (requestCode) {
-            REQUEST_PHOTO -> {
-                notifyGallery()
-                currentPhotoUri?.let { uri ->
-                    onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+        if (canSaveFile) {
+            when (requestCode) {
+                REQUEST_PHOTO -> {
+                    notifyGallery()
+                    currentPhotoUri?.let { uri ->
+                        onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+                    }
+                    dismissAllowingStateLoss()
+                    return
                 }
-                dismissAllowingStateLoss()
-                return
-            }
-            REQUEST_GALLERY -> {
-                data?.data?.let { uri ->
-                    onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+                REQUEST_GALLERY -> {
+                    data?.data?.let { uri ->
+                        onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+                    }
+                    dismissAllowingStateLoss()
+                    return
                 }
-                dismissAllowingStateLoss()
-                return
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -434,7 +436,7 @@ class BottomSheetImagePicker internal constructor() :
         private const val KEY_TITLE_RES_MULTI_MORE = "titleResMultiMore"
         private const val KEY_TITLE_RES_MULTI_LIMIT = "titleResMultiLimit"
         private const val KEY_FILE_LOCATION = "fileLocation"
-        private const val KEY_SAVE_FILE = "saveFile"
+        private const val KEY_CAN_SAVE_FILE = "canSaveFile"
 
         private const val KEY_TEXT_EMPTY = "emptyText"
         private const val KEY_TEXT_LOADING = "loadingText"
@@ -492,8 +494,8 @@ class BottomSheetImagePicker internal constructor() :
             this@Builder
         }
 
-        fun saveFile(saveFile: Boolean) = args.run {
-            putBoolean(KEY_SAVE_FILE, saveFile)
+        fun canSaveFile(saveFile: Boolean) = args.run {
+            putBoolean(KEY_CAN_SAVE_FILE, saveFile)
             this@Builder
         }
 
