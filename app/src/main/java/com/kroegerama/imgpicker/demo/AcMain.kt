@@ -29,7 +29,7 @@ class AcMain : BaseActivity(
             .singleSelectTitle(R.string.pick_single)
             .peekHeight(R.dimen.peekHeight)
             .requestTag("single")
-            .saveFile(true)
+            .canSaveFile(true)
             .fileLocation("DCIM/Checkd")
             .show(supportFragmentManager)
     }
@@ -46,7 +46,7 @@ class AcMain : BaseActivity(
                 R.string.pick_multi_limit
             )
             .requestTag("multi")
-            .saveFile(true)
+            .canSaveFile(true)
             .fileLocation("DCIM/Checkd")
             .show(supportFragmentManager)
     }
