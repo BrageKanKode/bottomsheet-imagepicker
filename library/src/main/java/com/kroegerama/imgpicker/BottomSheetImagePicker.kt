@@ -365,6 +365,7 @@ class BottomSheetImagePicker internal constructor() :
         resTitleMultiMore = args.getInt(KEY_TITLE_RES_MULTI_MORE, resTitleMultiMore)
         resTitleMultiLimit = args.getInt(KEY_TITLE_RES_MULTI_LIMIT, resTitleMultiLimit)
         fileLocation = args.getString(KEY_FILE_LOCATION, fileLocation)
+        canSaveFile = args.getBoolean(KEY_CAN_SAVE_FILE)
 
         peekHeight = args.getInt(KEY_PEEK_HEIGHT, peekHeight)
 

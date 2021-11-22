@@ -29,7 +29,7 @@ class AcMain : BaseActivity(
             .singleSelectTitle(R.string.pick_single)
             .peekHeight(R.dimen.peekHeight)
             .requestTag("single")
-            .canSaveFile(false)
+            .canSaveFile(true)
             .fileLocation("DCIM/Checkd")
             .show(supportFragmentManager)
     }
