@@ -313,7 +313,6 @@ class BottomSheetImagePicker internal constructor() :
             super.onActivityResult(requestCode, resultCode, data)
             return
         }
-        if (canSaveFile) {
             when (requestCode) {
                 REQUEST_PHOTO -> {
                     notifyGallery()
@@ -331,7 +330,7 @@ class BottomSheetImagePicker internal constructor() :
                     return
                 }
             }
-        }
+
         super.onActivityResult(requestCode, resultCode, data)
     }
 
