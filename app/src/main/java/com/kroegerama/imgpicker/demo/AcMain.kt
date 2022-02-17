@@ -47,8 +47,8 @@ class AcMain : BaseActivity(
                 R.string.pick_multi_limit
             )
             .requestTag("multi")
-            .canSaveFile(false)
             .fileLocation("Pictures/Checkd")
+            .canSaveFile(true)
             .show(supportFragmentManager)
     }
 

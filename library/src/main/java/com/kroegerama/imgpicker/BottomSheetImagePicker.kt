@@ -223,29 +223,30 @@ class BottomSheetImagePicker internal constructor() :
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.putExtra("android.intent.extra.quickCapture", true)
         if (intent.resolveActivity(requireContext().packageManager) == null) return
-        val photoUri = try {
-            getPhotoUri()
-        } catch (e: Exception) {
-            if (BuildConfig.DEBUG) Log.w(TAG, "could not prepare image file", e)
-            return
-        }
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoUri = photoUri
+            val photoUri = try {
+                getPhotoUri()
+            } catch (e: Exception) {
+                if (BuildConfig.DEBUG) Log.w(TAG, "could not prepare image file", e)
+                return
+            }
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoUri = photoUri
 
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-        requireContext().packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_DEFAULT_ONLY
-        ).forEach { info ->
-            val packageName = info.activityInfo.packageName
-            requireContext().grantUriPermission(
-                packageName,
-                photoUri,
-                Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
-            )
-        }
+            requireContext().packageManager.queryIntentActivities(
+                intent,
+                PackageManager.MATCH_DEFAULT_ONLY
+            ).forEach { info ->
+                val packageName = info.activityInfo.packageName
+                requireContext().grantUriPermission(
+                    packageName,
+                    photoUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
+
         startActivityForResult(intent, REQUEST_PHOTO)
     }
 
@@ -441,6 +442,8 @@ class BottomSheetImagePicker internal constructor() :
         private const val KEY_TEXT_EMPTY = "emptyText"
         private const val KEY_TEXT_LOADING = "loadingText"
 
+        private const val KEY_CAN_SAVE_FILE = "canSaveFile"
+
         private const val KEY_PEEK_HEIGHT = "peekHeight"
 
         private const val STATE_CURRENT_URI = "stateUri"
@@ -493,9 +496,8 @@ class BottomSheetImagePicker internal constructor() :
             putString(KEY_FILE_LOCATION, fileLoc)
             this@Builder
         }
-
-        fun canSaveFile(saveFile: Boolean) = args.run {
-            putBoolean(KEY_CAN_SAVE_FILE, saveFile)
+        fun canSaveFile(canSaveFile: Boolean) = args.run {
+            putBoolean(KEY_CAN_SAVE_FILE, canSaveFile)
             this@Builder
         }
 
