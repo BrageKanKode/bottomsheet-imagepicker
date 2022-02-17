@@ -30,7 +30,7 @@ class AcMain : BaseActivity(
             .peekHeight(R.dimen.peekHeight)
             .requestTag("single")
             .canSaveFile(true)
-            .fileLocation("DCIM/Checkd")
+            .fileLocation("Pictures/Checkd")
             .show(supportFragmentManager)
     }
 
@@ -48,7 +48,7 @@ class AcMain : BaseActivity(
             )
             .requestTag("multi")
             .canSaveFile(false)
-            .fileLocation("DCIM/Checkd")
+            .fileLocation("Pictures/Checkd")
             .show(supportFragmentManager)
     }
 
