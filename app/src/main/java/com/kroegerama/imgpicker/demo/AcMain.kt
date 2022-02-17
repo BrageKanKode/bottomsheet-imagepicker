@@ -21,6 +21,8 @@ class AcMain : BaseActivity(
     }
 
     private fun pickSingle() {
+        // TODO: Make saveFile dynamic
+        // TODO: Make FileLocation dynamic
         BottomSheetImagePicker.Builder(getString(R.string.file_provider))
             .cameraButton(ButtonType.Button)
             .galleryButton(ButtonType.Button)
@@ -28,10 +30,14 @@ class AcMain : BaseActivity(
             .peekHeight(R.dimen.peekHeight)
             .requestTag("single")
             .canSaveFile(true)
+            .fileLocation("Pictures/Checkd")
             .show(supportFragmentManager)
     }
 
+
     private fun pickMulti() {
+        // TODO: Make saveFile dynamic
+        // TODO: Make FileLocation dynamic
         BottomSheetImagePicker.Builder(getString(R.string.file_provider))
             .columnSize(R.dimen.columnSize)
             .multiSelect(3, 6)
@@ -41,6 +47,7 @@ class AcMain : BaseActivity(
                 R.string.pick_multi_limit
             )
             .requestTag("multi")
+            .fileLocation("Pictures/Checkd")
             .canSaveFile(true)
             .show(supportFragmentManager)
     }

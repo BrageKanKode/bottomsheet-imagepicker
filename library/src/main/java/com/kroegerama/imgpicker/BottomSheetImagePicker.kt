@@ -53,6 +53,7 @@ class BottomSheetImagePicker internal constructor() :
     private var showCameraButton = true
     private var showGalleryTile = false
     private var showGalleryButton = true
+    private var fileLocation = ""
     private var canSaveFile = true
 
     @StringRes
@@ -262,7 +263,7 @@ class BottomSheetImagePicker internal constructor() :
                 put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
 
                 //put images in DCIM folder
-                put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/")
+                put(MediaStore.MediaColumns.RELATIVE_PATH, fileLocation)
             }
             resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentVals)
         } else {
@@ -313,23 +314,24 @@ class BottomSheetImagePicker internal constructor() :
             super.onActivityResult(requestCode, resultCode, data)
             return
         }
-        when (requestCode) {
-            REQUEST_PHOTO -> {
-                notifyGallery()
-                currentPhotoUri?.let { uri ->
-                    onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+            when (requestCode) {
+                REQUEST_PHOTO -> {
+                    notifyGallery()
+                    currentPhotoUri?.let { uri ->
+                        onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+                    }
+                    dismissAllowingStateLoss()
+                    return
                 }
-                dismissAllowingStateLoss()
-                return
-            }
-            REQUEST_GALLERY -> {
-                data?.data?.let { uri ->
-                    onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+                REQUEST_GALLERY -> {
+                    data?.data?.let { uri ->
+                        onImagesSelectedListener?.onImagesSelected(listOf(uri), requestTag)
+                    }
+                    dismissAllowingStateLoss()
+                    return
                 }
-                dismissAllowingStateLoss()
-                return
             }
-        }
+
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -362,6 +364,8 @@ class BottomSheetImagePicker internal constructor() :
         resTitleMulti = args.getInt(KEY_TITLE_RES_MULTI, resTitleMulti)
         resTitleMultiMore = args.getInt(KEY_TITLE_RES_MULTI_MORE, resTitleMultiMore)
         resTitleMultiLimit = args.getInt(KEY_TITLE_RES_MULTI_LIMIT, resTitleMultiLimit)
+        fileLocation = args.getString(KEY_FILE_LOCATION, fileLocation)
+        canSaveFile = args.getBoolean(KEY_CAN_SAVE_FILE)
 
         peekHeight = args.getInt(KEY_PEEK_HEIGHT, peekHeight)
 
@@ -432,6 +436,8 @@ class BottomSheetImagePicker internal constructor() :
         private const val KEY_TITLE_RES_MULTI = "titleResMulti"
         private const val KEY_TITLE_RES_MULTI_MORE = "titleResMultiMore"
         private const val KEY_TITLE_RES_MULTI_LIMIT = "titleResMultiLimit"
+        private const val KEY_FILE_LOCATION = "fileLocation"
+        private const val KEY_CAN_SAVE_FILE = "canSaveFile"
 
         private const val KEY_TEXT_EMPTY = "emptyText"
         private const val KEY_TEXT_LOADING = "loadingText"
@@ -486,6 +492,10 @@ class BottomSheetImagePicker internal constructor() :
             this@Builder
         }
 
+        fun fileLocation(fileLoc: String) = args.run {
+            putString(KEY_FILE_LOCATION, fileLoc)
+            this@Builder
+        }
         fun canSaveFile(canSaveFile: Boolean) = args.run {
             putBoolean(KEY_CAN_SAVE_FILE, canSaveFile)
             this@Builder
